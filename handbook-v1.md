@@ -2,13 +2,13 @@
 id: HANDBOOK-ai-engineering-operating-model-v1
 title: AI Engineering Operating Model Handbook V1
 status: proposed
-version: 1.2.0
+version: 1.3.0
 type: handbook
 scope: global
 source_of_truth: false
 owner: engineering-leadership
 created_at: 2026-07-13
-updated_at: 2026-07-13
+updated_at: 2026-11-23
 review_cycle: quarterly
 based_on: ./handbook-specification.md
 ---
@@ -146,7 +146,7 @@ Operating Model xác định Developer phải đọc PRD và ADR nào, change th
 
 ### 4.7. Điều cần nhớ
 
-- Operating Model kết nối People, Process, Knowledge, Technology và Governance.
+- Operating Model kết nối People, Process, Knowledge, Technology, Governance và Improvement.
 - Platform cung cấp capability; Operating Model định hướng cách capability được sử dụng.
 - Human accountability không được chuyển cho AI.
 
@@ -271,6 +271,13 @@ Hiểu mỗi role có mục tiêu, failure mode và accountability khác nhau kh
 
 Một số use case cần Product Owner, Security Owner, Data Owner, Architecture Owner hoặc Incident Commander. Tên role có thể khác theo tổ chức, nhưng authority phải rõ. Không ép Developer, QC hoặc Team Lead tự quyết vấn đề ngoài thẩm quyền chỉ vì AI đã đưa ra recommendation.
 
+Các role ở bảng trên là role công việc. Tài liệu còn có **role sở hữu** (`owner:`, reviewer bắt buộc), ví dụ `tech-lead`, `mobile-lead`, `engineering-platform`. Hai điều cần giữ:
+
+- Một gate chỉ được trỏ tới role **có định nghĩa và có người giữ**. Role chỉ tồn tại trên giấy làm gate không thể đạt.
+- Tài liệu ghi role; **một bảng duy nhất** ánh xạ role → người. Đổi người thì sửa một chỗ, và `approved_by` vẫn ghi người cụ thể.
+
+Ví dụ scaffold: [`roles-and-responsibilities.md`](./examples/multi-repo/docs/operating-model/people/roles-and-responsibilities.md), [`ownership.md`](./examples/multi-repo/docs/workspace/ownership.md).
+
 ### 8.4. Điều cần nhớ
 
 - AI hỗ trợ role; không nhận accountability thay role.
@@ -317,6 +324,8 @@ AI Output là draft hoặc evidence trung gian. Nó chỉ thành official artifa
 - **Domain knowledge** lưu business rule và architecture dài hạn của một lĩnh vực.
 
 Nếu chỉ lưu knowledge trong initiative, team có thể mất kiến thức dài hạn sau khi initiative đóng. Nếu chỉ lưu ở domain, người thực hiện khó trace một thay đổi cụ thể. Hai lớp cần liên kết nhưng không copy toàn bộ nội dung.
+
+ID của initiative nên là **token ngẫu nhiên**, không phải số thứ tự. Số thứ tự cần một nơi cấp phát chung; các branch song song không thấy nhau nên có thể cùng lấy một số và phải đổi tên hàng loạt khi merge. Quy tắc đặt tên: [`document-naming.md`](./examples/multi-repo/docs/governance/document-naming.md).
 
 ### 9.5. Freshness
 
@@ -392,7 +401,7 @@ Risk thường tăng khi:
 - Thay đổi public contract hoặc architecture dài hạn.
 - Evidence khó thu thập.
 
-Risk threshold và classification rule cụ thể phải nằm trong risk policy. Hiện policy này là dependency gap.
+Risk threshold và classification rule cụ thể phải nằm trong risk policy. Scaffold có skeleton ở [`risk-level-policy.md`](./examples/multi-repo/docs/governance/risk-level-policy.md) (`draft`); tổ chức chưa phê duyệt thì đó vẫn là dependency gap.
 
 ### 11.3. Quality gate
 
@@ -417,17 +426,20 @@ Với change có risk cao, accountability còn cần **segregation of duties**: 
 
 AI làm tăng số nơi dữ liệu có thể đi qua. Governance phải xác định tool nào được phép, loại dữ liệu nào được dùng, retention thế nào và xử lý incident ra sao.
 
-Handbook không định nghĩa các rule đó. Security policy authoritative hiện là dependency gap.
+Handbook không định nghĩa các rule đó. Scaffold có skeleton ở [`security-policy.md`](./examples/multi-repo/docs/governance/security-policy.md) (`draft`); security policy authoritative của tổ chức vẫn là dependency gap cho tới khi được phê duyệt.
 
 ### 11.6. Evidence và audit
 
 Không phải task nào cũng cần lưu toàn bộ chat. Evidence cần đủ để trả lời:
 
+- Session làm việc cho initiative nào?
 - Source nào đã được dùng?
 - Assumption nào quan trọng?
 - Validation nào đã chạy?
 - Ai review/approve?
 - Vì sao quyết định được đưa ra?
+
+Câu hỏi đầu tiên cần được trả lời **trước** khi làm việc: một AI session nên gắn với đúng một initiative do người dùng chọn, không tự suy ra từ branch hay lịch sử. Nhờ đó branch, commit và evidence truy được về một initiative, kể cả khi thay đổi là sửa chính governance. Rule cụ thể: [`ai-governance.md`](./examples/multi-repo/docs/governance/ai-governance.md).
 
 ### 11.7. Điều cần nhớ
 
@@ -643,14 +655,17 @@ Nếu chưa trả lời được, quay lại chapter liên quan hoặc trao đ�
 
 Handbook đang ở trạng thái `proposed`; các nội dung mô tả risk, security và quality gate chỉ giải thích rationale.
 
-Các dependency cần được tạo trước khi Handbook trở thành baseline chính thức:
+Các dependency cần được **phê duyệt** trước khi Handbook trở thành baseline chính thức. Scaffold đã có skeleton ở trạng thái `draft` cho phần lớn trong số này; skeleton chưa phải authority:
 
-- AI governance policy.
-- Risk-level policy.
-- Quality-gate policy.
-- Security/data-handling policy.
-- Document standard và glossary canonical.
-- Approval/exception authority.
+| Dependency | Skeleton trong scaffold |
+| --- | --- |
+| AI governance policy | [`ai-governance.md`](./examples/multi-repo/docs/governance/ai-governance.md) |
+| Risk-level policy | [`risk-level-policy.md`](./examples/multi-repo/docs/governance/risk-level-policy.md) |
+| Quality-gate policy | [`quality-gates.md`](./examples/multi-repo/docs/governance/quality-gates.md) |
+| Security/data-handling policy | [`security-policy.md`](./examples/multi-repo/docs/governance/security-policy.md) |
+| Document standard | [`document-standard.md`](./examples/multi-repo/docs/governance/document-standard.md) |
+| Glossary canonical | [`glossary.md`](./examples/multi-repo/docs/reference/glossary.md) |
+| Approval/exception authority | chưa có |
 
 Khi policy chưa tồn tại, không được diễn giải nội dung Handbook như rule đã được tổ chức phê duyệt.
 
@@ -661,4 +676,4 @@ Khi policy chưa tồn tại, không được diễn giải nội dung Handbook 
 - [`playbook-v1.md`](./playbook-v1.md): workflow, use case và checklist thực hành.
 - [`playbook-specification.md`](./playbook-specification.md): yêu cầu nội dung Playbook.
 - [`aiom-document-structure.md`](./aiom-document-structure.md): topology tài liệu đề xuất.
-- [`AI-engineering-operating-system-open-questions.md`](./AI-engineering-operating-system-open-questions.md): decision backlog.
+- `AI-engineering-operating-system-open-questions.md`: decision backlog — **chưa tồn tại (dependency gap)**.

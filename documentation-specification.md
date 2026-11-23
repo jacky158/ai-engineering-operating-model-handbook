@@ -189,4 +189,4 @@ Handbook giải thích policy. Playbook operationalize policy. Khi có xung đ�
 - [`handbook-specification.md`](./handbook-specification.md): yêu cầu nội dung và chất lượng Handbook.
 - [`playbook-specification.md`](./playbook-specification.md): yêu cầu nội dung và chất lượng Playbook.
 - [`aiom-document-structure.md`](./aiom-document-structure.md): topology tài liệu đề xuất.
-- [`AI-engineering-operating-system-open-questions.md`](./AI-engineering-operating-system-open-questions.md): decision backlog.
+- `AI-engineering-operating-system-open-questions.md`: decision backlog — **chưa tồn tại (dependency gap)**.

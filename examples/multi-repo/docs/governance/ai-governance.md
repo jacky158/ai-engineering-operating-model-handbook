@@ -36,5 +36,23 @@ Workflow quan trọng cần evaluation set + version record (`.ai/` eval metadat
 ## 6. Audit & evidence
 TODO: evidence tối thiểu cần lưu (source dùng, assumption, validation, approver, lý do). Retention theo `security-policy.md`.
 
+## 7. Active initiative của session
+- Một AI session làm việc trên **đúng một initiative**, và initiative đó do **người dùng chọn**. Bước này đi trước
+  context loading: active initiative quyết định context nào được nạp.
+- **Chưa chọn thì chưa làm.** Không sửa/tạo file, không chạy lệnh đổi trạng thái, không draft, không khảo sát code
+  cho task. Chỉ được đọc `docs/registry/initiative-index.md` để liệt kê lựa chọn.
+- **Agent không tự suy ra** initiative từ tên branch, commit, đường dẫn, memory hay session trước. Có thể đặt dự đoán
+  lên đầu danh sách; người dùng vẫn là người chọn.
+- Câu trả lời hợp lệ: một initiative có sẵn; một initiative **mới** (agent tạo trước, ID theo `document-naming.md`);
+  hoặc **"no initiative"** — chỉ khi người dùng nói rõ và việc đó **không tạo commit** (restart service, đọc log,
+  pull code, trả lời câu hỏi). Agent không đề xuất lựa chọn này làm mặc định.
+- **Thay đổi governance không được miễn.** Sửa `docs/governance/`, `docs/templates/`, `docs/registry/`,
+  `.ai/rules/`, `.ai/context/` hoặc adapter (`CLAUDE.md`, `AGENTS.md`) cần một initiative. Nên có một **standing
+  initiative** cho governance; thay đổi rule được ghi thành ADR trong initiative đó.
+- Sau khi chọn, agent nêu `Active initiative: INIT-…` và nạp folder của initiative. Yêu cầu nằm ngoài initiative →
+  dừng và hỏi có chuyển không. Lựa chọn không mang sang session mới.
+- **Traceability:** tên branch, commit subject (`docs(INIT-…): …`), tiêu đề PR và evidence trong `.ai/outputs/`
+  mang ID của active initiative.
+
 ## Liên quan
 `risk-level-policy.md`, `security-policy.md`, `quality-gates.md`, `.ai/rules/`.

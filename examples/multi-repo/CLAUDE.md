@@ -3,6 +3,17 @@
 Adapter mỏng cho Claude Code. **Không** chứa policy gốc; trỏ về `.ai/` (source of truth cho AI asset).
 Nếu file này lệch `.ai/`, `.ai/` thắng và adapter bị coi là stale (Mục 6.7, 14).
 
+## Active initiative — bắt buộc trước mọi việc
+
+Mỗi session gắn với **một initiative do người dùng chọn** (`docs/governance/ai-governance.md` Mục 7;
+`.ai/rules/context-loading-policy.md` Step 0).
+
+- Request không nêu initiative → hỏi trước, liệt kê từ `docs/registry/initiative-index.md` và thêm "new initiative".
+  Trước khi có câu trả lời chỉ đọc registry đó.
+- Không suy ra từ branch, commit, đường dẫn, memory hay session trước.
+- "No initiative" chỉ hợp lệ khi người dùng nói rõ và việc đó không tạo commit. Thay đổi governance cần initiative.
+- Sau khi chọn: nêu `Active initiative: INIT-…`; ID đó đi vào branch, commit subject, tiêu đề PR và evidence.
+
 ## Trước khi làm bất kỳ task nào
 
 Đọc context tối thiểu cho multi repo (Mục 16.1):

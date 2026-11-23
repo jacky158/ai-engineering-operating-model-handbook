@@ -24,6 +24,11 @@ Mỗi contract có một repo/domain là source of truth. TODO: bảng contract 
 ## 3. Reviewer bắt buộc
 Theo repo/domain bị ảnh hưởng (từ `repo-impact.md`). High-risk cần thêm Architecture/Security Owner.
 
+- `tech-lead` là reviewer bắt buộc cho các repo backend và frontend. Không định nghĩa role riêng `backend-lead`,
+  `frontend-lead` hay "repo owner": role không có người giữ thì gate không thể đạt.
+- Thay đổi chạm mobile API hoặc mobile client cần thêm `mobile-lead`.
+- Reviewer ghi bằng **role**; người giữ role tra ở `../workspace/ownership.md`.
+
 ## 4. PR & deploy
 - Chia PR theo repo.
 - **Thứ tự merge/deploy** để giữ backward compatibility (ví dụ provider trước consumer).

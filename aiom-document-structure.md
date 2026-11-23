@@ -5,7 +5,7 @@ canonical_path: docs/governance/document-structure.md
 status: proposed
 owner: engineering-platform
 created_at: 2026-07-09
-updated_at: 2026-07-13
+updated_at: 2026-11-23
 type: governance
 purpose: standard
 scope: global
@@ -449,8 +449,8 @@ Nội dung nên gồm:
 
 | Module          | Impact | Reason                   | Required reviewer |
 | --------------- | ------ | ------------------------ | ----------------- |
-| Auth            | high   | Permission policy change | backend-lead      |
-| User Management | medium | UI permission display    | frontend-lead     |
+| Auth            | high   | Permission policy change | tech-lead         |
+| User Management | medium | UI permission display    | tech-lead         |
 
 ## Affected layers
 
@@ -841,8 +841,8 @@ Nội dung nên gồm:
 
 | Repo     | Impact | Reason                           | Required reviewer |
 | -------- | ------ | -------------------------------- | ----------------- |
-| backend  | high   | Permission API and policy change | backend-lead      |
-| frontend | medium | Permission UI behavior change    | frontend-lead     |
+| backend  | high   | Permission API and policy change | tech-lead         |
+| frontend | medium | Permission UI behavior change    | tech-lead         |
 
 ## Affected contracts
 
@@ -1345,22 +1345,25 @@ Section này chỉ mô tả naming tối thiểu để hiểu cấu trúc thư m
 Initiative folder nên dùng format:
 
 ```text
-INIT-<YEAR>-<NUMBER>-<short-slug>/
+INIT-<YEAR>-<TOKEN>-<short-slug>/
 ```
+
+`<TOKEN>` là 6 chữ cái in hoa ngẫu nhiên `A`–`Z` (ví dụ `KQZTBM`), không phải số thứ tự — để nhiều người/nhiều session tạo initiative song song không trùng ID. Các initiative cũ dạng số (`INIT-2026-001` … `029`) được giữ nguyên. Cách sinh token và quy tắc đầy đủ: `docs/governance/document-naming.md` Section 2.
 
 RFC/ADR trong initiative folder nên dùng tên có prefix vì một initiative có thể có nhiều RFC/ADR:
 
 ```text
-rfc/RFC-<YEAR>-<NUMBER>-<short-slug>.md
-adr/ADR-<YEAR>-<NUMBER>-<short-slug>.md
+rfc/RFC-<YEAR>-<TOKEN>[x]-<short-slug>.md
+adr/ADR-<YEAR>-<TOKEN>[x]-<short-slug>.md
 ```
 
 Ví dụ:
 
 ```text
-INIT-2026-001-user-permission-rework/
-rfc/RFC-2026-001-permission-model.md
-adr/ADR-2026-001-use-policy-based-permission.md
+INIT-2026-KQZTBM-user-permission-rework/
+rfc/RFC-2026-KQZTBM-permission-model.md
+adr/ADR-2026-KQZTBM-use-policy-based-permission.md
+adr/ADR-2026-KQZTBMb-cache-permission-matrix.md
 ```
 
 ### 9.2. Tên file ổn định trong initiative
@@ -1714,12 +1717,12 @@ Chỉ áp dụng cho multi repo.
 
 | Loại tài liệu          | Owner chính                |
 | ---------------------- | -------------------------- |
-| Repo README            | Repo owner / Tech Lead     |
-| Module overview        | Repo owner / Senior Dev    |
-| Local development      | Repo owner                 |
-| Testing local          | Repo owner + QA            |
-| Migration notes        | Backend Lead / Repo owner  |
-| State management local | Frontend Lead / Repo owner |
+| Repo README            | Tech Lead                  |
+| Module overview        | Tech Lead / Senior Dev     |
+| Local development      | Tech Lead                  |
+| Testing local          | Tech Lead + QA             |
+| Migration notes        | Tech Lead                  |
+| State management local | Tech Lead                  |
 | Product package notes  | Product module owner       |
 
 ### 13.3. Ownership cho `.ai/`
