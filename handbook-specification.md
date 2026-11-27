@@ -177,4 +177,4 @@ Workflow thực thi phải liên kết tới Playbook.
 
 - [`documentation-specification.md`](./documentation-specification.md): specification cấp bộ tài liệu.
 - [`playbook-specification.md`](./playbook-specification.md): specification của tài liệu thực hành.
-- [`AI-engineering-operating-system-open-questions.md`](./AI-engineering-operating-system-open-questions.md): decision backlog.
+- `AI-engineering-operating-system-open-questions.md`: decision backlog — **chưa tồn tại (dependency gap)**.

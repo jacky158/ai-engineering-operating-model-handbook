@@ -586,4 +586,4 @@ Khi workflow phát hiện vấn đề:
 - [`documentation-specification.md`](./documentation-specification.md): kiến trúc bộ tài liệu.
 - [`handbook-specification.md`](./handbook-specification.md): yêu cầu kiến thức nền.
 - [`aiom-document-structure.md`](./aiom-document-structure.md): topology tài liệu đề xuất.
-- [`AI-engineering-operating-system-open-questions.md`](./AI-engineering-operating-system-open-questions.md): decision backlog.
+- `AI-engineering-operating-system-open-questions.md`: decision backlog — **chưa tồn tại (dependency gap)**.

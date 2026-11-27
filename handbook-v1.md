@@ -2,13 +2,13 @@
 id: HANDBOOK-ai-engineering-operating-model-v1
 title: AI Engineering Operating Model Handbook V1
 status: proposed
-version: 1.2.0
+version: 1.4.0
 type: handbook
 scope: global
 source_of_truth: false
 owner: engineering-leadership
 created_at: 2026-07-13
-updated_at: 2026-07-13
+updated_at: 2026-11-23
 review_cycle: quarterly
 based_on: ./handbook-specification.md
 ---
@@ -51,8 +51,31 @@ Handbook giải thích **Why / What**. Khi cần các bước thực hiện, use
 | Hiểu context engineering | Chương 10 |
 | Hiểu risk và quality gate | Chương 11 |
 | Phân biệt prompt, workflow và agent | Chương 12 |
+| Biết team đang ở mức trưởng thành nào | Chương 14 |
 | Tổ chức pilot và measurement | Chương 14–15 |
 | Thực hiện task cụ thể | Chuyển sang Playbook |
+
+### 2.3. Lộ trình đọc theo role
+
+| Role | Đọc trước | Đọc thêm khi cần |
+| --- | --- | --- |
+| Developer | Chương 4, 6, 10, 13 | Chương 9, 12 |
+| QC | Chương 4, 6, 13 | Chương 10, 11 |
+| Team Lead | Chương 4, 5, 8, 14 | Chương 15 |
+| QA | Chương 5, 7, 11, 15 | Chương 13, 14 |
+| Tech Lead | Chương 4, 8, 9, 11, 12 | Chương 13 |
+| Stakeholder | Chương 4, 5 | Chương 14, 15 |
+
+Mọi role đều nên đọc mục của mình trong Chương 8.
+
+### 2.4. Mức độ của từng chương
+
+| Mức | Chương |
+| --- | --- |
+| Cơ bản | 4, 5, 6, 7, 8, 10 |
+| Nâng cao | 9, 11, 12, 13, 14, 15 |
+
+Handbook không có nội dung riêng cho một tool cụ thể. Ví dụ dùng tên tool nằm trong scaffold và Playbook.
 
 ## 3. Glossary
 
@@ -80,6 +103,19 @@ Handbook giải thích **Why / What**. Khi cần các bước thực hiện, use
 | Request for Comments (RFC) | Tài liệu dùng để thảo luận technical design |
 | Architecture Decision Record (ADR) | Tài liệu ghi quyết định kiến trúc và rationale |
 | Personally Identifiable Information (PII) | Dữ liệu có thể nhận diện một cá nhân |
+| Hallucination | Nội dung AI tạo ra nghe hợp lý nhưng sai hoặc không có trong nguồn |
+| Baseline | Số đo trước khi thay đổi, dùng để so sánh sau khi thay đổi |
+| Blast radius | Phạm vi bị ảnh hưởng nếu một thay đổi hoặc hành động sai |
+| Rollback | Đưa hệ thống về trạng thái trước một thay đổi |
+| Test oracle | Căn cứ để biết kết quả đúng của một test là gì |
+| Segregation of duties | Tách người tạo ra output khỏi người phê duyệt nó |
+| Escalation | Chuyển một vấn đề cho người có thẩm quyền quyết định |
+| Stale | Nội dung đã cũ so với nguồn mà nó tóm tắt hoặc mô tả |
+| Dependency gap | Một tài liệu hoặc policy được tham chiếu nhưng chưa tồn tại hoặc chưa được phê duyệt |
+| Initiative | Một thay đổi có mục tiêu và phạm vi xác định, có folder tài liệu riêng |
+| Active initiative | Initiative mà một AI session đang làm việc, do người dùng chọn |
+| Productivity theatre | Số liệu hoạt động tăng trong khi outcome không tốt hơn |
+| Maturity | Mức độ một cách làm đã được viết ra, làm theo, kiểm bằng máy và đo lường |
 
 Thuật ngữ canonical cần được tách thành glossary riêng khi bộ tài liệu được promote thành `accepted`.
 
@@ -146,7 +182,7 @@ Operating Model xác định Developer phải đọc PRD và ADR nào, change th
 
 ### 4.7. Điều cần nhớ
 
-- Operating Model kết nối People, Process, Knowledge, Technology và Governance.
+- Operating Model kết nối People, Process, Knowledge, Technology, Governance và Improvement.
 - Platform cung cấp capability; Operating Model định hướng cách capability được sử dụng.
 - Human accountability không được chuyển cho AI.
 
@@ -183,7 +219,25 @@ Các metric như số dòng code, số task có AI hoặc số prompt không cho
 
 Operating Model hướng team từ “AI tạo bao nhiêu?” sang “AI giúp outcome tốt hơn thế nào?”.
 
-### 5.4. Điều cần nhớ
+### 5.4. Productivity theatre
+
+**Productivity theatre** là khi team trình diễn năng suất thay vì tạo ra nó: số liệu hoạt động tăng (prompt, dòng code, số task "có AI") trong khi outcome không đổi hoặc xấu đi.
+
+Dấu hiệu:
+
+- Báo cáo adoption không có baseline và không có số liệu rework.
+- Thời gian generation được đo, thời gian review và sửa lỗi thì không.
+- Tài liệu, test hoặc review do AI sinh ra được tính là "đã làm" dù chưa ai kiểm chứng.
+
+Cách tránh là đo end-to-end (Chương 15) và chỉ tính một output là xong khi nó đã qua validation tương ứng với risk.
+
+### 5.5. Hiểu nhầm thường gặp
+
+- **"AI giúp từng người nhanh hơn nên cả team nhanh hơn."** Tốc độ của team bị giới hạn bởi bước chậm nhất, thường là review và validation.
+- **"Bottleneck ở review là do reviewer chậm."** Thường là do diff quá lớn hoặc thiếu context đi kèm.
+- **"Adoption cao nghĩa là thành công."** Adoption chỉ cho biết tool được mở, không cho biết outcome.
+
+### 5.6. Điều cần nhớ
 
 - Tốc độ tạo output không đồng nghĩa tốc độ giao giá trị.
 - Cần kiểm soát toàn bộ flow, không chỉ bước dùng AI.
@@ -245,7 +299,13 @@ Nhận diện dấu hiệu team đang sử dụng AI thiếu coordination hoặc
 | Knowledge debt | Quyết định kiến trúc chỉ còn trong lịch sử chat của một cá nhân | Decision không có record; knowledge nằm trong chat; code không maintain được | Phụ thuộc cá nhân/tool và context nhanh stale | Chương 9; Playbook UC-10 |
 | Handoff và bottleneck | Diff 2000 dòng sinh trong buổi sáng nhưng reviewer cần cả tuần | Output sinh nhanh hơn review/test; role dùng source khác nhau | Rework chuyển downstream, lead time không giảm | Chương 13; Playbook UC-04/05/08 |
 
-### 7.3. Điều cần nhớ
+### 7.3. Hiểu nhầm thường gặp
+
+- **"Mỗi failure mode là lỗi của một role."** Phần lớn xuất hiện ở chỗ giao giữa các role.
+- **"Thêm một lượt AI review là đủ."** Nếu lượt review dùng cùng context thiếu, nó lặp lại cùng lỗi (Chương 13).
+- **"Chỉ team lớn mới gặp."** Team nhỏ gặp sớm hơn vì một người giữ nhiều role và ít kiểm tra chéo.
+
+### 7.4. Điều cần nhớ
 
 Failure mode thường liên kết với nhau. Context kém có thể dẫn tới output sai, review quá tải, test không đúng oracle và knowledge debt.
 
@@ -271,7 +331,24 @@ Hiểu mỗi role có mục tiêu, failure mode và accountability khác nhau kh
 
 Một số use case cần Product Owner, Security Owner, Data Owner, Architecture Owner hoặc Incident Commander. Tên role có thể khác theo tổ chức, nhưng authority phải rõ. Không ép Developer, QC hoặc Team Lead tự quyết vấn đề ngoài thẩm quyền chỉ vì AI đã đưa ra recommendation.
 
-### 8.4. Điều cần nhớ
+Các role ở bảng trên là role công việc. Tài liệu còn có **role sở hữu** (`owner:`, reviewer bắt buộc), ví dụ `tech-lead`, `mobile-lead`, `engineering-platform`. Hai điều cần giữ:
+
+- Một gate chỉ được trỏ tới role **có định nghĩa và có người giữ**. Role chỉ tồn tại trên giấy làm gate không thể đạt.
+- Tài liệu ghi role; **một bảng duy nhất** ánh xạ role → người. Đổi người thì sửa một chỗ, và `approved_by` vẫn ghi người cụ thể.
+
+Ví dụ scaffold: [`roles-and-responsibilities.md`](./examples/multi-repo/docs/operating-model/people/roles-and-responsibilities.md), [`ownership.md`](./examples/multi-repo/docs/workspace/ownership.md).
+
+### 8.4. Ví dụ
+
+Một thay đổi API ảnh hưởng cả web và mobile. `repo-impact.md` ghi reviewer là `tech-lead` cho backend và frontend, thêm `mobile-lead` vì mobile client bị ảnh hưởng. Bảng role holders cho biết ai đang giữ hai role đó. Nếu tài liệu ghi một role không ai giữ, người làm sẽ biết ngay gate chưa thể đạt và cần escalation, thay vì tự coi như đã được review.
+
+### 8.5. Hiểu nhầm thường gặp
+
+- **"Role là chức danh."** Role là một tập trách nhiệm; một người có thể giữ nhiều role và một role có thể do nhiều người giữ.
+- **"Ghi tên người vào tài liệu cho rõ."** Tên người đổi thường xuyên; ghi role và giữ một bảng ánh xạ.
+- **"AI review xong thì reviewer chỉ cần xác nhận."** Reviewer vẫn chịu trách nhiệm hiểu thay đổi mình approve.
+
+### 8.6. Điều cần nhớ
 
 - AI hỗ trợ role; không nhận accountability thay role.
 - Handoff phải mang theo source, assumption và evidence.
@@ -318,18 +395,41 @@ AI Output là draft hoặc evidence trung gian. Nó chỉ thành official artifa
 
 Nếu chỉ lưu knowledge trong initiative, team có thể mất kiến thức dài hạn sau khi initiative đóng. Nếu chỉ lưu ở domain, người thực hiện khó trace một thay đổi cụ thể. Hai lớp cần liên kết nhưng không copy toàn bộ nội dung.
 
+ID của initiative nên là **token ngẫu nhiên**, không phải số thứ tự. Số thứ tự cần một nơi cấp phát chung; các branch song song không thấy nhau nên có thể cùng lấy một số và phải đổi tên hàng loạt khi merge. Quy tắc đặt tên: [`document-naming.md`](./examples/multi-repo/docs/governance/document-naming.md).
+
 ### 9.5. Freshness
 
 Document có thể tồn tại nhưng đã stale. Freshness cần owner, review cycle, source revision và supersession relation. AI-facing summary đặc biệt dễ stale vì source thay đổi nhưng summary không được refresh.
 
-### 9.6. Hiểu nhầm thường gặp
+### 9.6. Lifecycle và deprecation
+
+Một tài liệu đi qua các trạng thái:
+
+```text
+draft → proposed → accepted
+              ↘ rejected
+accepted → deprecated
+accepted → superseded (trỏ tới tài liệu thay thế)
+```
+
+- Tài liệu chưa `accepted` không phải source of truth, dù nội dung nghe có vẻ bắt buộc.
+- Khi một tài liệu hết đúng, **không xoá**: đánh dấu `deprecated`, hoặc `superseded` kèm liên kết tới tài liệu mới. Xoá làm mất lý do của các quyết định cũ.
+- Chuyển sang `accepted` cần ghi ai phê duyệt và khi nào.
+
+Một bộ tài liệu có thể ở `draft` hoặc `proposed` rất lâu trong khi team đã làm theo nó hằng ngày. Điều đó chấp nhận được trong giai đoạn pilot, nhưng cần nói rõ: đó là chuẩn đề xuất, chưa phải baseline bắt buộc.
+
+### 9.7. Ví dụ
+
+Một ADR chọn cách đánh ID initiative theo số thứ tự. Sau một lần hai branch cùng lấy một số, team quyết định dùng token ngẫu nhiên. ADR cũ không bị sửa hay xoá: một ADR mới ghi quyết định mới và lý do, policy đặt tên được cập nhật, và các file tóm tắt trong `.ai/` lấy policy đó làm nguồn được làm mới hoặc đánh dấu stale. Người đọc sau này vẫn hiểu vì sao các ID cũ có dạng số.
+
+### 9.8. Hiểu nhầm thường gặp
 
 - “AI đã tóm tắt nên không cần đọc source.”
 - “File trong `.ai/` luôn mới hơn và chính xác hơn.”
 - “Generated document trở thành official khi được commit.”
 - “Copy nội dung sang nhiều nơi giúp AI tìm dễ hơn.”
 
-### 9.7. Điều cần nhớ
+### 9.9. Điều cần nhớ
 
 Knowledge tốt cần canonical source, owner, lifecycle và traceability. AI output cần được promote, không được copy blindly.
 
@@ -366,7 +466,13 @@ Do đó context-loading nên phụ thuộc task type, risk và impact, không d�
 
 Yêu cầu “thêm trường trạng thái vào API” chưa đủ để implementation. AI còn cần biết compatibility rule, consumer, schema, migration, enum convention và rollback. Nếu thiếu, AI có thể tạo breaking change dù code compile.
 
-### 10.6. Điều cần nhớ
+### 10.6. Hiểu nhầm thường gặp
+
+- **"Càng nhiều context càng tốt."** Context dư làm chìm tín hiệu quan trọng.
+- **"AI đã đọc cả repo nên đã hiểu hệ thống."** Đọc được file không có nghĩa biết file nào là nguồn chính thức.
+- **"Tóm tắt là đủ."** Tóm tắt có thể stale; khi quyết định quan trọng, đọc nguồn gốc.
+
+### 10.7. Điều cần nhớ
 
 - Context đúng quan trọng hơn context nhiều.
 - Source authoritative quan trọng hơn summary tiện lợi.
@@ -392,7 +498,7 @@ Risk thường tăng khi:
 - Thay đổi public contract hoặc architecture dài hạn.
 - Evidence khó thu thập.
 
-Risk threshold và classification rule cụ thể phải nằm trong risk policy. Hiện policy này là dependency gap.
+Risk threshold và classification rule cụ thể phải nằm trong risk policy. Scaffold có skeleton ở [`risk-level-policy.md`](./examples/multi-repo/docs/governance/risk-level-policy.md) (`draft`); tổ chức chưa phê duyệt thì đó vẫn là dependency gap.
 
 ### 11.3. Quality gate
 
@@ -417,19 +523,40 @@ Với change có risk cao, accountability còn cần **segregation of duties**: 
 
 AI làm tăng số nơi dữ liệu có thể đi qua. Governance phải xác định tool nào được phép, loại dữ liệu nào được dùng, retention thế nào và xử lý incident ra sao.
 
-Handbook không định nghĩa các rule đó. Security policy authoritative hiện là dependency gap.
+Handbook không định nghĩa các rule đó. Scaffold có skeleton ở [`security-policy.md`](./examples/multi-repo/docs/governance/security-policy.md) (`draft`); security policy authoritative của tổ chức vẫn là dependency gap cho tới khi được phê duyệt.
 
 ### 11.6. Evidence và audit
 
 Không phải task nào cũng cần lưu toàn bộ chat. Evidence cần đủ để trả lời:
 
+- Session làm việc cho initiative nào?
 - Source nào đã được dùng?
 - Assumption nào quan trọng?
 - Validation nào đã chạy?
 - Ai review/approve?
 - Vì sao quyết định được đưa ra?
 
-### 11.7. Điều cần nhớ
+Câu hỏi đầu tiên cần được trả lời **trước** khi làm việc: một AI session nên gắn với đúng một initiative do người dùng chọn, không tự suy ra từ branch hay lịch sử. Nhờ đó branch, commit và evidence truy được về một initiative, kể cả khi thay đổi là sửa chính governance. Rule cụ thể: [`ai-governance.md`](./examples/multi-repo/docs/governance/ai-governance.md).
+
+### 11.7. Exception, incident và promotion
+
+- **Exception** là khi một rule không thể áp dụng cho một trường hợp cụ thể. Exception cần người có authority phê duyệt, có phạm vi và thời hạn, và được ghi lại. Tự bỏ qua gate không phải là exception.
+- **Incident** là khi control đã thất bại: dữ liệu nhạy cảm bị đưa vào tool, output sai tới production, hoặc gate bị vượt. Incident cần được báo, xử lý và dẫn tới thay đổi ở knowledge, workflow hoặc policy.
+- **Promotion** là bước biến một draft thành artifact chính thức. Promotion do người thực hiện, có owner và evidence; AI không tự promote output của mình.
+
+Ai phê duyệt exception và quy trình incident cụ thể do policy authoritative quy định.
+
+### 11.8. Ví dụ
+
+Một hotfix cần ra trong đêm và test suite đầy đủ mất hai giờ. Bỏ qua test rồi merge là gate bypass. Cách đúng là xin exception: người có authority đồng ý chạy tập test rút gọn cho đúng phạm vi thay đổi, ghi lại lý do và cam kết chạy đủ suite sáng hôm sau. Nếu sau đó phát hiện lỗi, đó là incident và phải quay lại xem exception có được cấp đúng hay không.
+
+### 11.9. Hiểu nhầm thường gặp
+
+- **"Governance là thêm thủ tục."** Mục tiêu là đặt control đúng chỗ có risk, và bỏ control ở chỗ không cần.
+- **"Có policy là có control."** Policy chỉ thành control khi có người hoặc công cụ thực thi nó.
+- **"Tài liệu `proposed` đã là rule."** Chưa được phê duyệt thì đó là đề xuất.
+
+### 11.10. Điều cần nhớ
 
 - Risk quyết định độ sâu của control.
 - Policy tạo authority; Playbook operationalize policy.
@@ -472,7 +599,23 @@ Nhiều agent không tự động tạo independent review. Nếu các agent dù
 
 Prompt/workflow có thể thay đổi behavior khi model hoặc tool đổi. Vì vậy workflow quan trọng cần representative evaluation set và version record. “Model mới hơn” không bảo đảm phù hợp hơn với use case cụ thể.
 
-### 12.8. Điều cần nhớ
+### 12.8. Ví dụ
+
+Cùng một việc "review thay đổi":
+
+- **Prompt:** "Review diff này và liệt kê rủi ro." Một lượt hỏi đáp, người gửi tự đánh giá câu trả lời.
+- **Workflow:** nạp PRD và impact analysis → AI review → reviewer kiểm tra finding → ghi evidence → approve. Có input, output và validation ở từng bước.
+- **Agent:** tự đọc diff, chạy test, mở file liên quan và viết nhận xét. Cần khai báo rõ nó được đọc gì, chạy gì, và không được tự merge.
+
+Input/output contract là phần mô tả mỗi bước nhận gì và phải trả ra gì; thiếu nó, không thể biết một bước đã làm đúng hay chưa.
+
+### 12.9. Hiểu nhầm thường gặp
+
+- **"Agent là prompt dài hơn."** Agent có quyền hành động; rủi ro đến từ quyền đó, không từ độ dài chỉ dẫn.
+- **"Nhiều agent thì khách quan hơn."** Cùng model và cùng context thì cùng điểm mù.
+- **"Workflow chạy tốt một lần là ổn định."** Đổi model hoặc tool có thể đổi hành vi; cần đánh giá lại.
+
+### 12.10. Điều cần nhớ
 
 - Prompt là một phần nhỏ của workflow.
 - Agent autonomy phải đi cùng scope, permission và evidence.
@@ -513,7 +656,13 @@ Control cần xuất hiện tại nhiều điểm:
 
 Các bước cụ thể nằm trong Playbook, không được duy trì lại tại Handbook.
 
-### 13.4. Điều cần nhớ
+### 13.4. Hiểu nhầm thường gặp
+
+- **"Có test pass là đã đúng."** Test sinh từ implementation chỉ xác nhận implementation nhất quán với chính nó.
+- **"Lỗi nằm ở bước cuối cùng phát hiện ra nó."** Nguyên nhân thường ở bước đầu, nơi assumption được đưa vào.
+- **"Review kỹ hơn sẽ bắt được."** Reviewer không thể thấy một requirement không có trong context họ nhận.
+
+### 13.5. Điều cần nhớ
 
 - Failure thường xuyên role và xuyên artifact.
 - Independence đến từ source, role và evidence, không chỉ số lượt AI review.
@@ -568,7 +717,32 @@ Chỉ mở rộng khi:
 - Policy và tool boundary đủ dùng.
 - Team có capacity hỗ trợ adoption.
 
-### 14.6. Điều cần nhớ
+### 14.6. Maturity
+
+Team không chuyển từ "chưa có gì" sang "vận hành đầy đủ" trong một bước. Có thể nhìn mức trưởng thành theo năm mức:
+
+| Mức | Tên | Dấu hiệu |
+| --- | --- | --- |
+| 1 | Ad hoc | Mỗi người tự dùng AI; không có source chung, không có rule |
+| 2 | Documented | Đã có `docs/`, `.ai/` và rule được viết ra, nhưng chưa được làm theo đều |
+| 3 | Practised | Rule được dùng hằng ngày theo quy ước; có evidence thật cho ít nhất một initiative |
+| 4 | Enforced | Các rule quan trọng được kiểm bằng máy (CI, hook), không chỉ bằng kỷ luật cá nhân |
+| 5 | Measured | Có baseline và metric; failure dẫn tới thay đổi có owner ở knowledge, workflow hoặc control |
+
+Vài điều rút ra từ thực tế áp dụng:
+
+- **Documented chưa phải adopted.** Hãy phân biệt ba nhóm: đã dùng hằng ngày, đã có nhưng chưa dùng đều, và chỉ dựa vào quy ước thủ công.
+- **Mô tả thường đi sau thực hành.** Team hay làm trước rồi mới viết Operating Model; điều đó bình thường, miễn là phần mô tả phản ánh đúng cái đang làm.
+- **Mỗi mảng ở một mức khác nhau.** Cấu trúc tài liệu có thể ở mức 3 trong khi kiểm tra tự động vẫn ở mức 2.
+- **Không mở rộng automation hoặc multi-agent khi chưa ở mức 3** cho mảng đó: tự động hoá một quy trình chưa ổn định chỉ làm lỗi lan nhanh hơn.
+
+### 14.7. Hiểu nhầm thường gặp
+
+- **"Pilot thành công ở một team thì áp dụng được cho mọi team."** Risk, domain và năng lực review khác nhau.
+- **"Viết xong tài liệu là đã áp dụng."** Áp dụng được đo bằng việc rule có được làm theo hay không.
+- **"Mức trưởng thành cao hơn luôn tốt hơn."** Chỉ nâng mức ở mảng mà chi phí kiểm soát thấp hơn rủi ro nó ngăn.
+
+### 14.8. Điều cần nhớ
 
 - Pilot use case, không pilot “AI nói chung”.
 - Bắt đầu nhỏ, đo end-to-end và giữ feedback loop.
@@ -616,7 +790,17 @@ Kết quả pilot có thể dẫn tới ba loại thay đổi:
 - **Workflow gap** → cập nhật Playbook use case.
 - **Control gap** → policy owner xem xét thay đổi rule/gate.
 
-### 15.6. Điều cần nhớ
+### 15.6. Ví dụ
+
+Ví dụ giả định: một team đo "số pull request có AI hỗ trợ" và thấy tăng 40%. Khi thêm baseline và đo end-to-end, họ thấy thời gian chờ review tăng gấp đôi và số lần phải sửa sau review tăng. Kết luận đổi từ "AI giúp nhanh hơn" thành "AI tạo diff nhanh hơn năng lực review". Hành động là giới hạn kích thước diff và yêu cầu impact analysis đi kèm, không phải cấp thêm tool.
+
+### 15.7. Hiểu nhầm thường gặp
+
+- **"Không đo được thì không cần đo."** Một baseline thô vẫn tốt hơn không có baseline.
+- **"Metric tốt lên nghĩa là outcome tốt lên."** Metric bị tối ưu riêng lẻ sẽ lệch khỏi outcome nó đại diện.
+- **"Feedback là khảo sát cuối quý."** Feedback có giá trị khi nó dẫn tới một thay đổi cụ thể có owner.
+
+### 15.8. Điều cần nhớ
 
 - Đo end-to-end outcome và downstream cost.
 - Kết hợp metric định lượng với feedback theo role.
@@ -643,14 +827,17 @@ Nếu chưa trả lời được, quay lại chapter liên quan hoặc trao đ�
 
 Handbook đang ở trạng thái `proposed`; các nội dung mô tả risk, security và quality gate chỉ giải thích rationale.
 
-Các dependency cần được tạo trước khi Handbook trở thành baseline chính thức:
+Các dependency cần được **phê duyệt** trước khi Handbook trở thành baseline chính thức. Scaffold đã có skeleton ở trạng thái `draft` cho phần lớn trong số này; skeleton chưa phải authority:
 
-- AI governance policy.
-- Risk-level policy.
-- Quality-gate policy.
-- Security/data-handling policy.
-- Document standard và glossary canonical.
-- Approval/exception authority.
+| Dependency | Skeleton trong scaffold |
+| --- | --- |
+| AI governance policy | [`ai-governance.md`](./examples/multi-repo/docs/governance/ai-governance.md) |
+| Risk-level policy | [`risk-level-policy.md`](./examples/multi-repo/docs/governance/risk-level-policy.md) |
+| Quality-gate policy | [`quality-gates.md`](./examples/multi-repo/docs/governance/quality-gates.md) |
+| Security/data-handling policy | [`security-policy.md`](./examples/multi-repo/docs/governance/security-policy.md) |
+| Document standard | [`document-standard.md`](./examples/multi-repo/docs/governance/document-standard.md) |
+| Glossary canonical | [`glossary.md`](./examples/multi-repo/docs/reference/glossary.md) |
+| Approval/exception authority | chưa có |
 
 Khi policy chưa tồn tại, không được diễn giải nội dung Handbook như rule đã được tổ chức phê duyệt.
 
@@ -661,4 +848,4 @@ Khi policy chưa tồn tại, không được diễn giải nội dung Handbook 
 - [`playbook-v1.md`](./playbook-v1.md): workflow, use case và checklist thực hành.
 - [`playbook-specification.md`](./playbook-specification.md): yêu cầu nội dung Playbook.
 - [`aiom-document-structure.md`](./aiom-document-structure.md): topology tài liệu đề xuất.
-- [`AI-engineering-operating-system-open-questions.md`](./AI-engineering-operating-system-open-questions.md): decision backlog.
+- `AI-engineering-operating-system-open-questions.md`: decision backlog — **chưa tồn tại (dependency gap)**.

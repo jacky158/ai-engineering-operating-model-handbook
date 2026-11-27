@@ -1,8 +1,8 @@
 ---
 # --- Copy khối frontmatter này vào docs/initiatives/<init>/prd.md và điền lại ---
-id: PRD-<YEAR>-<NUMBER>
+id: PRD-<YEAR>-<TOKEN>
 title: <Tên feature>
-canonical_path: docs/initiatives/INIT-<YEAR>-<NUMBER>-<slug>/prd.md
+canonical_path: docs/initiatives/INIT-<YEAR>-<TOKEN>-<slug>/prd.md
 type: prd
 purpose: implementation
 status: draft
@@ -12,7 +12,7 @@ updated_at: <YYYY-MM-DD>
 scope: initiative
 source_of_truth: false
 ai_usage: allowed
-initiative: INIT-<YEAR>-<NUMBER>
+initiative: INIT-<YEAR>-<TOKEN>
 jira_epic: <KEY-000>
 related_proposal: <PROP-...>
 affected_domains: []
